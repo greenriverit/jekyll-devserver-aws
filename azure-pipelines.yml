@@ -26,7 +26,18 @@ steps:
     echo about to ls -al pipelines
     ls -al pipelines
     echo about to check the python version
-    python -v
+    echo about to get the versions of python
+    python ––version
+    python3 ––version
+    python3.7 ––version
+    sudo apt update
+    sudo apt install software-properties-common
+    echo skipping deadsnakes because it requires user input
+    sudo apt update
+    sudo apt install python3.7
+    python ––version
+    python3 ––version
+    python3.7 ––version
   displayName: Multiline Bash script
   env:
     name: Microsoft
