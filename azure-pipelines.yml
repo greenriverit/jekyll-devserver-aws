@@ -21,6 +21,7 @@ steps:
 - bash: |
     which bash
     echo Hello $name
+    ls -al
   displayName: Multiline Bash script
   env:
     name: Microsoft
