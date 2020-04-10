@@ -25,6 +25,8 @@ steps:
     ls -al
     echo about to ls -al pipelines
     ls -al pipelines
+    echo about to check the python version
+    python -v
   displayName: Multiline Bash script
   env:
     name: Microsoft
