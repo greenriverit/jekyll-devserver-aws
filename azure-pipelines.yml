@@ -25,14 +25,11 @@ steps:
     ls -al
     echo about to ls -al pipelines
     ls -al pipelines
-    echo about to check the python version
     echo about to get the versions of python
-    python –v
-    python3 –v
-    sudo apt-get update
-    sudo apt-get install python3.6
-    python –v
-    python3 –v
+    sudo find / -type f -executable -iname 'python*' -exec file -i '{}' \; | awk -F: '/x-executable; charset=binary/ {print $1}' | xargs readlink -f | sort -u | xargs -I % sh -c 'echo -n "%: "; % -V'
+    echo about to try the manual V commands for python
+    python –V
+    python3 –V
   displayName: Multiline Bash script
   env:
     name: Microsoft
