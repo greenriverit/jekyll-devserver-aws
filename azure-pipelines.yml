@@ -27,6 +27,8 @@ steps:
     ls -al pipelines
     echo about to get the versions of python
     sudo find / -type f -executable -iname 'python*' -exec file -i '{}' \; | awk -F: '/x-executable; charset=binary/ {print $1}' | xargs readlink -f | sort -u | xargs -I % sh -c 'echo -n "%: "; % -V'
+    echo about to test timeit
+    python3 -m timeit -h # for details
   displayName: Multiline Bash script
   env:
     name: Microsoft
