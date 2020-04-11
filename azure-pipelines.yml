@@ -27,9 +27,6 @@ steps:
     ls -al pipelines
     echo about to get the versions of python
     sudo find / -type f -executable -iname 'python*' -exec file -i '{}' \; | awk -F: '/x-executable; charset=binary/ {print $1}' | xargs readlink -f | sort -u | xargs -I % sh -c 'echo -n "%: "; % -V'
-    echo about to try the manual V commands for python
-    python –V
-    python3 –V
   displayName: Multiline Bash script
   env:
     name: Microsoft
