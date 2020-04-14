@@ -29,6 +29,7 @@ steps:
     sudo find / -type f -executable -iname 'python*' -exec file -i '{}' \; | awk -F: '/x-executable; charset=binary/ {print $1}' | xargs readlink -f | sort -u | xargs -I % sh -c 'echo -n "%: "; % -V'
     echo about to test timeit
     python3 -m timeit -h # for details
+    echo about to try to run terraform deployment script
   displayName: Multiline Bash script
   env:
     name: Microsoft
