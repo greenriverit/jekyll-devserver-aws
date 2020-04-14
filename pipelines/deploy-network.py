@@ -12,7 +12,8 @@ import time
 #################################################################################
 
 #path_to_jekyll_module='C:\\projects\\terraform\\portable-kubernetes-example\\modules\\ansible-and-aws-hostnetwork-module\\'
-path_to_call_to_jekyll_module = "C:\\projects\\terraform\\jekyll-devbox-aws\\calls-to-modules\\jekyll-host-call-to-module"
+#path_to_call_to_jekyll_module = "C:\\projects\\terraform\\jekyll-devbox-aws\\calls-to-modules\\jekyll-host-call-to-module"
+path_to_call_to_jekyll_module = "../calls-to-modules/jekyll-host-call-to-module"
 command_to_call_jekyll_module = 'python pipeline-jekyll-network-apply.py'
 
 myRegion="us-west-2"
