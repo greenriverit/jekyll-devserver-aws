@@ -30,6 +30,7 @@ steps:
     echo about to test timeit
     python3 -m timeit -h # for details
     echo about to try to run terraform deployment script
+    python3 deploy-network.py
   displayName: Multiline Bash script
   env:
     name: Microsoft
