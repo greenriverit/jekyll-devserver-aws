@@ -1,5 +1,5 @@
 module "jekyll-devbox" {
-  source = "..\\..\\modules\\jekyll-devbox-module"
+  source = "../../modules/jekyll-devbox-module"
 
   _region = "us-west-2"
   access_key = "${var._public_access_key}"
