@@ -1,4 +1,3 @@
-# For info on how to refer to variables between scripts, see: https://stackoverflow.com/questions/16048237/pass-variable-between-python-scripts
 import subprocess
 import re
 import networkdeploymentfunctions as ndep
