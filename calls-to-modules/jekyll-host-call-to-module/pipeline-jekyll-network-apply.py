@@ -37,7 +37,7 @@ print(argsstr)
 subprocess.run("terraform init", shell=True, check=True)
 
 try:
-    subprocess.run(argsstr, shell=True, check=True)
+    #subprocess.run(argsstr, shell=True, check=True)
 except Exception: 
     print("FAILED TO RUN THE argsstr COMMAND. ")
     pass
