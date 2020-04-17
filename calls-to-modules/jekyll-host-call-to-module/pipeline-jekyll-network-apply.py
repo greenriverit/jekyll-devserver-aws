@@ -33,9 +33,14 @@ print(skstr)
 argsstr = f'-var=\"name_of_ssh_key=ansible-server\" {pkstr} {skstr} -var=\"aws_region=us-west-2\"'
 print("About to print argsstr: ")
 print(argsstr)
+cmdstr = 'terraform apply -auto-approve ' + argstr
+print(f'cmdstr is:  {cmdstr}') 
 
 subprocess.run("terraform init", shell=True, check=True)
 
-#PUT THIS BACK IN: subprocess.run('terraform apply -auto-approve -var="name_of_ssh_key=ansible-server" ' + pkstr + ' ' + skstr + ' -var="aws_region=us-west-2"', shell=True, check=True)
+#THE FOLLOWING SHOULD EXECUTE cmdstr AFTER YOU VALIDATE cmdstr:  subprocess.run(cmdstr, shell=True, check=True)
+
+
+#subprocess.run('terraform apply -auto-approve -var="name_of_ssh_key=ansible-server" ' + pkstr + ' ' + skstr + ' -var="aws_region=us-west-2"', shell=True, check=True)
 
 #subprocess.run("terraform apply -auto-approve -var-file="+path_to_jekyll_iam_keys+"awspublickey.tfvars -var-file="+path_to_jekyll_iam_keys+"awsvpcmeta.tfvars -var-file="+path_to_jekyll_iam_keys+"awskeymeta.tfvars", shell=True, check=True)
