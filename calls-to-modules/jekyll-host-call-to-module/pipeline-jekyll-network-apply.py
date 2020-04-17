@@ -36,11 +36,11 @@ print(argsstr)
 cmdstr = 'terraform apply -auto-approve ' + argstr
 print("About to print cmdstr: ")
 #print(f'-var=\"_secret_access_key={skvar}\"')
-print(f'the cmdstr is:{cmdstr}') 
+print(cmdstr) 
 
 subprocess.run("terraform init", shell=True, check=True)
 
-subprocess.run(cmdstr, shell=True, check=True)
+#subprocess.run(cmdstr, shell=True, check=True)
 
 
 #subprocess.run('terraform apply -auto-approve -var="name_of_ssh_key=ansible-server" ' + pkstr + ' ' + skstr + ' -var="aws_region=us-west-2"', shell=True, check=True)
