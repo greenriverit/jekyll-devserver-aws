@@ -35,7 +35,8 @@ print("About to print argsstr: ")
 print(argsstr)
 cmdstr = 'terraform apply -auto-approve ' + argstr
 print("About to print cmdstr: ")
-print(f'cmdstr is:  {cmdstr}') 
+#print(f'-var=\"_secret_access_key={skvar}\"')
+print(f'the cmdstr is:{cmdstr}') 
 
 subprocess.run("terraform init", shell=True, check=True)
 
