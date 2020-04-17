@@ -33,7 +33,15 @@ def checkForErrors(myDecodedLine):
 def deployHostNetwork( scriptName, workingDir ):
     print("scriptName is: " +scriptName)
     print("workingDir is: " +workingDir)
-    proc = subprocess.Popen( scriptName,cwd=workingDir,stdout=subprocess.PIPE, shell=True)
+
+    ##Start of new _try_ block
+    try:
+        proc = subprocess.Popen( scriptName,cwd=workingDir,stdout=subprocess.PIPE, shell=True)
+    except Exception: 
+        print("FAILED TO RUN THE subprocess.popen COMMAND IN networkdeploymentfunctions. ")
+        pass
+    ##End of new _try_ blodk
+
     inCidrBlock='false'
     while True:
       line = proc.stdout.readline()
