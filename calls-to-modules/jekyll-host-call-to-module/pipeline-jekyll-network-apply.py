@@ -33,7 +33,7 @@ print(skstr)
 argsstr = f'-var=\"name_of_ssh_key=ansible-server\" {pkstr} {skstr} -var=\"aws_region=us-west-2\"'
 print("About to print argsstr: ")
 print(argsstr)
-cmdstr = 'terraform apply -auto-approve ' + argstr
+cmdstr = '__terraform_apply -auto-approve ' + argstr
 print("About to print cmdstr: ")
 #print(f'-var=\"_secret_access_key={skvar}\"')
 print(cmdstr) 
