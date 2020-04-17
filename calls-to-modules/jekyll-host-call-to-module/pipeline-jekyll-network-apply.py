@@ -44,6 +44,6 @@ print(skstr)
 
 subprocess.run("terraform init", shell=True, check=True)
 
-#MODIFY THIS LINE AFTER VALIDATING STRINGS FIRST:  subprocess.run('terraform apply -auto-approve -var="name_of_ssh_key=ansible-server" -var="_public_access_key=$()" -var="_secret_access_key=$(-secret-access-key)" -var="aws_region=us-west-2"', shell=True, check=True)
+subprocess.run('terraform apply -auto-approve -var="name_of_ssh_key=ansible-server" ' + pkstr + ' ' + skstr + ' -var="aws_region=us-west-2"', shell=True, check=True)
 
 #subprocess.run("terraform apply -auto-approve -var-file="+path_to_jekyll_iam_keys+"awspublickey.tfvars -var-file="+path_to_jekyll_iam_keys+"awsvpcmeta.tfvars -var-file="+path_to_jekyll_iam_keys+"awskeymeta.tfvars", shell=True, check=True)
