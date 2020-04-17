@@ -26,8 +26,16 @@ myRegion="us-west-2"
 ################################################################################  
 ### 1. NOW DEPLOY THE JEKYLL HOST NETWORK
 ################################################################################  
-ndep.deployHostNetwork( command_to_call_jekyll_module, path_to_call_to_jekyll_module)
-#PUT THIS BACK IN FOR REAL: nval.validateHostNetwork(ndep.cidr_subnet, ndep.cidr_subnet_list, ndep.security_group_id, ndep.vpc_id, ndep.route_table_id)
+
+##Start of new _try_ block
+try:
+    ndep.deployHostNetwork( command_to_call_jekyll_module, path_to_call_to_jekyll_module)
+    #PUT THIS BACK IN FOR REAL: nval.validateHostNetwork(ndep.cidr_subnet, ndep.cidr_subnet_list, ndep.security_group_id, ndep.vpc_id, ndep.route_table_id)
+except Exception: 
+    print("FAILED TO RUN THE subprocess.popen COMMAND IN networkdeploymentfunctions. ")
+    pass
+##End of new _try_ block
+
 print("                                  ")
 print("  **** Finished Deploying Jekyll Host Network. ****")
 print("                                  ")
