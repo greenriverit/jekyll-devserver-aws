@@ -16,7 +16,7 @@ import time
 path_to_call_to_jekyll_module = "../calls-to-modules/jekyll-host-call-to-module"
 command_to_call_jekyll_module = 'python3 pipeline-jekyll-network-apply.py ' + sys.argv[1] + ' ' + sys.argv[2]
 
-print("The imported variabled resolve to: ")
+print("The imported variables resolve to: ")
 print(sys.argv[0])
 print(sys.argv[1])
 print(sys.argv[2])
