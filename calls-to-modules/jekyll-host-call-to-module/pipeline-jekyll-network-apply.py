@@ -1,5 +1,6 @@
 import subprocess
 import os 
+import sys 
 
 #path_to_jekyll_iam_keys="C:\\projects\\Jekyll\\vars\\VarsForTerraform\\"
 
@@ -12,7 +13,7 @@ print(dir_path)
 print("cwd is: ")
 print(cwd)
 
-print("The imported variabled resolve to: ")
+print("The imported variables resolve to: ")
 print(sys.argv[0])
 print(sys.argv[1])
 print(sys.argv[2])
