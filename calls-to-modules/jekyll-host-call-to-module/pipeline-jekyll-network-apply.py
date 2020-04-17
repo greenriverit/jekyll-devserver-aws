@@ -30,7 +30,7 @@ print("About to interpolate skvar: ")
 print(f'-var=\"_secret_access_key={skvar}\"')
 print("About to print skstr: ")
 print(skstr)
-argsstr = f'-var=\"name_of_ssh_key=ansible-server\" {pkstr} {skstr} -var=\"aws_region=us-west-2\"'
+argsstr = f'__terraform_apply -auto-approve -var=\"name_of_ssh_key=ansible-server\" {pkstr} {skstr} -var=\"aws_region=us-west-2\"'
 print("About to print argsstr: ")
 print(argsstr)
 skstr = f'-var=\"_secret_access_key={skvar}\"'
