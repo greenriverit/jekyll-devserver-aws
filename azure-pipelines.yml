@@ -19,21 +19,21 @@ steps:
   displayName: 'Run a multi-line script'
 
 - bash: |
-    which bash
-    echo Hello $name
+#    which bash
+#    echo Hello $name
     echo about to ls -al
     ls -al
-    echo about to ls -al pipelines
-    ls -al pipelines
-    echo about to get the versions of python
+#    echo about to ls -al pipelines
+#    ls -al pipelines
+#    echo about to get the versions of python
     # sudo find / -type f -executable -iname 'python*' -exec file -i '{}' \; | awk -F: '/x-executable; charset=binary/ {print $1}' | xargs readlink -f | sort -u | xargs -I % sh -c 'echo -n "%: "; % -V'
-    echo about to test timeit
+#    echo about to test timeit
     # python3 -m timeit -h # for details
-    echo about to get version of terraform
-    terraform version
-    echo about to try to run terraform deployment script
-    cd pipelines
-    python3 deploy-network.py
+#    echo about to get version of terraform
+#    terraform version
+#    echo about to try to run terraform deployment script
+#    cd pipelines
+#    python3 deploy-network.py
   displayName: Multiline Bash script
   env:
     name: Microsoft
