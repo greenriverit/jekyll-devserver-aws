@@ -19,6 +19,7 @@ command_to_call_jekyll_module = 'python3 pipeline-jekyll-network-apply.py'
 print("The two imported variabled resolve to: ")
 print(sys.argv[0])
 print(sys.argv[1])
+print(sys.argv[2])
 
 myRegion="us-west-2"
 
