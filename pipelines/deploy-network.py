@@ -1,3 +1,4 @@
+import sys
 import subprocess
 import re
 import networkdeploymentfunctions as ndep
@@ -15,13 +16,17 @@ import time
 path_to_call_to_jekyll_module = "../calls-to-modules/jekyll-host-call-to-module"
 command_to_call_jekyll_module = 'python3 pipeline-jekyll-network-apply.py'
 
+print("The two imported variabled resolve to: ")
+print(sys.argv[0])
+print(sys.argv[1])
+
 myRegion="us-west-2"
 
 ################################################################################  
 ### 1. NOW DEPLOY THE JEKYLL HOST NETWORK
 ################################################################################  
-ndep.deployHostNetwork( command_to_call_jekyll_module, path_to_call_to_jekyll_module)
-nval.validateHostNetwork(ndep.cidr_subnet, ndep.cidr_subnet_list, ndep.security_group_id, ndep.vpc_id, ndep.route_table_id)
+#PUT THIS BACK IN FOR REAL: ndep.deployHostNetwork( command_to_call_jekyll_module, path_to_call_to_jekyll_module)
+#PUT THIS BACK IN FOR REAL: nval.validateHostNetwork(ndep.cidr_subnet, ndep.cidr_subnet_list, ndep.security_group_id, ndep.vpc_id, ndep.route_table_id)
 print("                                  ")
 print("  **** Finished Deploying Jekyll Host Network. ****")
 print("                                  ")
