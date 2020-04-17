@@ -38,8 +38,8 @@ subprocess.run("terraform init", shell=True, check=True)
 
 try:
     print("Inside __try__ block in __pipeline-jekyll-network-apply__.  About to run __terraform__apply command. ")
-    #subprocess.run(argsstr, shell=True, check=True)
-    throwanerror! 
+    subprocess.run(argsstr, shell=True, check=True)
+    #throwanerror! 
 except Exception: 
     print("FAILED TO RUN THE argsstr COMMAND. ")
     pass
