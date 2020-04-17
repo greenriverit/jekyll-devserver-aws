@@ -36,8 +36,11 @@ print(argsstr)
 
 subprocess.run("terraform init", shell=True, check=True)
 
-#subprocess.run(argsstr, shell=True, check=True)
-
+try:
+    subprocess.run(argsstr, shell=True, check=True)
+except Exception: 
+    print("FAILED TO RUN THE argsstr COMMAND. ")
+    pass
 
 #subprocess.run('terraform apply -auto-approve -var="name_of_ssh_key=ansible-server" ' + pkstr + ' ' + skstr + ' -var="aws_region=us-west-2"', shell=True, check=True)
 
