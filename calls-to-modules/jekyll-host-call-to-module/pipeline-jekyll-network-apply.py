@@ -12,6 +12,12 @@ print(dir_path)
 print("cwd is: ")
 print(cwd)
 
+print("The imported variabled resolve to: ")
+print(sys.argv[0])
+print(sys.argv[1])
+print(sys.argv[2])
+
+
 subprocess.run("terraform init", shell=True, check=True)
 
 subprocess.run('terraform apply -auto-approve -var="name_of_ssh_key=ansible-server" -var="_public_access_key=$(-public-access-key)" -var="_secret_access_key=$(-secret-access-key)" -var="aws_region=us-west-2"', shell=True, check=True)
