@@ -1,3 +1,6 @@
+## Copyright 2020 Green River IT (GreenRiverIT.com) as described in LICENSE.txt distributed with this project on GitHub.  
+## Start at https://github.com/GreenRiverIT    
+
 # For info on how to refer to variables between scripts, see: https://stackoverflow.com/questions/16048237/pass-variable-between-python-scripts
 import subprocess
 import re
