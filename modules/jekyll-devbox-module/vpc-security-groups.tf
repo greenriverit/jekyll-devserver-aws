@@ -1,3 +1,6 @@
+## Copyright 2020 Green River IT (GreenRiverIT.com) as described in LICENSE.txt distributed with this project on GitHub.  
+## Start at https://github.com/GreenRiverIT    
+
 # Security groups and rules to allow the nodes to communicate with each other and the outside world.  
 # Here we are putting all nodes in the same security group and subnet.  
 # This is a simple example.
