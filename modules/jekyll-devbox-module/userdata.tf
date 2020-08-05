@@ -1,4 +1,7 @@
+## Copyright 2020 Green River IT (GreenRiverIT.com) as described in LICENSE.txt distributed with this project on GitHub.  
+## Start at https://github.com/GreenRiverIT    
   
+
 ####################################################  
 # Below we create the USERDATA to get the instance ready to run Jekyll.
 # The Terraform local simplifies Base64 encoding.  
