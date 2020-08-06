@@ -1,13 +1,13 @@
 # Where things are
-source              : /home/jekyll-host/jekyll-files/
-destination         : /home/jekyll-host/jekyll-files/_site
-collections_dir     : /home/jekyll-host/jekyll-files/
-plugins_dir         : /home/jekyll-host/jekyll-files/_plugins
-layouts_dir         : /home/jekyll-host/jekyll-files/_layouts
-data_dir            : /home/jekyll-host/jekyll-files/_data
-includes_dir        : /home/jekyll-host/jekyll-files/_includes
+source              : /home/aci-user/jekyll-files/
+destination         : /home/aci-user/jekyll-files/_site
+collections_dir     : /home/aci-user/jekyll-files/
+plugins_dir         : /home/aci-user/jekyll-files/_plugins
+layouts_dir         : /home/aci-user/jekyll-files/_layouts
+data_dir            : /home/aci-user/jekyll-files/_data
+includes_dir        : /home/aci-user/jekyll-files/_includes
 sass:
-  sass_dir: /home/jekyll-host/jekyll-files/_sass
+  sass_dir: /home/aci-user/jekyll-files/_sass
 collections:
   posts:
     output          : true
