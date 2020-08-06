@@ -1,7 +1,4 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# This minimal pipeline will need to be elaborated upon to do a more complete build, test, deploy 
 
 trigger:
 - master
@@ -10,17 +7,19 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    echo About to list all contents of current directory:
+    ls -al
+    echo About to list contents of drop location:
+    ls -al $(Build.ArtifactStagingDirectory)
+    echo About to copy the artifact elements to the drop location:
+    mv LICENSE.txt $(Build.ArtifactStagingDirectory)
+    echo About to list contents of Artifact Staging Directory
+    ls -al $(Build.ArtifactStagingDirectory)
   displayName: 'Run a multi-line script'
 
-- bash: |
-    echo about to ls -al
-    ls -al
-  displayName: Multiline Bash script
-  env:
-    name: Microsoft
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
