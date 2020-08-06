@@ -8,7 +8,7 @@
 resource "aws_security_group" "jekyll-hosts" {
   name        = "jekyll nodes"
   description = "Security group for all nodes in the cluster"
-  vpc_id      = aws_vpc.jekyll-host.id
+  vpc_id      = data.aws_vpc.selected.id
 
   egress {
     from_port   = 0
