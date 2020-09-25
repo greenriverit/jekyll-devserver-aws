@@ -1,1 +1,9 @@
+#Very simple playbook just to test connection.  
+- name: Simple playbook example 
+  hosts: demoservers
+  remote_user: agile-cloud
 
+  tasks:  
+
+     - name: Get user name
+       shell: whoami
