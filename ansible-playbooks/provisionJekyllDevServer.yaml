@@ -1,12 +1,70 @@
 ## Copyright 2020 Green River IT (GreenRiverIT.com) as described in LICENSE.txt distributed with this project on GitHub.  
 ## Start at https://github.com/GreenRiverIT    
 
-#Very simple playbook just to test connection.  
-- name: Simple playbook example 
+#Get the Dev Server provisioned for Jekyll.  
+- name: Provision Dev Server for Jekyll 
   hosts: demoservers
   remote_user: agile-cloud
+  vars_files:
+    - myVars.yaml
 
   tasks:  
 
-     - name: Get user name
-       shell: whoami
+    - debug: msg="the value of myVars.yaml is {{ contents }}"
+
+    - name: Get user name
+      shell: whoami
+
+    - name : Update all yum packages
+      yum: name=* state=latest update_cache=true
+
+    - name: Run whoami command as root
+      shell: whoami
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ root_pass_jekyll }}"
+
+    - name: Add group jekyll-host to remote server
+      group:
+       name: jekyll-host
+       gid: 2012
+       state: present 
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ root_pass_jekyll }}"
+
+    - name: Add user "jekyll-host" to remote server
+      user:
+       name: jekyll-host
+       comment: "Privileged User"
+       uid: 2001
+       group: jekyll-host
+       append: yes
+       shell: /bin/bash
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ root_pass_jekyll }}"
+
+    - name: Run whoami command as the jekyll-host user
+      shell: whoami
+      become: true
+      become_user: jekyll-host
+      vars:
+        ansible_become_password: "{{ root_pass_jekyll }}"
+
+    - name: add user to sudoers group without password.
+      shell:
+        cmd: |
+          cat << 'EOF' > /etc/sudoers.d/jekyll-host
+          User_Alias JEKYLL_AUTOMATION = %jekyll-host
+          JEKYLL_AUTOMATION ALL=(ALL)      NOPASSWD: ALL
+          EOF
+      args:
+        executable: /bin/bash
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ root_pass_jekyll }}"
