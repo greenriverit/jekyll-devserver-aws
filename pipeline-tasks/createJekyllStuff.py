@@ -1,15 +1,44 @@
 ## Copyright 2020 Green River IT (GreenRiverIT.com) as described in LICENSE.txt distributed with this project on GitHub.  
 ## Start at https://github.com/GreenRiverIT    
+<<<<<<< HEAD
   
 import subprocess
 import sys
 import platform
 import deploymentFunctions as depfunc 
 
+=======
+
+import subprocess
+import sys
+import deploymentFunctions as depfunc 
+
+def createHostsFileAnsible(ansibleHostsGroupName, remoteJekyllServerIP, remoteJekyllPassWord): 
+  groupNameLine="["+ansibleHostsGroupName+"]\n"	
+  hostNameLine=remoteJekyllServerIP + " ansible_ssh_pass=" + remoteJekyllPassWord + "\n"	
+  hostsFileNameAndPath='/etc/ansible/hosts' 
+  print("hostsFileNameAndPath is: ", hostsFileNameAndPath)	
+  print("About to write 2 lines to a file.")	
+  f = open(hostsFileNameAndPath, "w")	
+  f.write(groupNameLine)	
+  f.write(hostNameLine)	
+  f.close()	
+
+def createVarsFileAnsible(varFileName, remoteJekyllPassWord):
+  pwdLine = 'root_pass_jekyll: ' + remoteJekyllPassWord
+  print("pwdLine is: ", pwdLine)
+  print("About to write 1 line to a file.")	
+  f = open(varFileName, "w")	
+  f.write(pwdLine)
+  f.close()	
+
+
+>>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 ###################################################################################  
 ### 1. Import the variables.  These will come from key vault and pipeline but for 
 ###       now during development only we are stating them explicitly.  
 ################################################################################### 
+<<<<<<< HEAD
 dynamicVarsPath = "" 
 if platform.system() == 'Windows':
   dynamicVarsPath = config_SecretsPath + "\\dynamicvars\\"
@@ -31,6 +60,12 @@ gitRepoName=sys.argv[5]
 
 remoteJekyllUserName='agile-cloud'
 remoteJekyllPassWord='just-for-demo123'
+=======
+DefaultWorkingDirectory=sys.argv[1] 
+remoteJekyllUserName='agile-cloud'
+remoteJekyllServerIP=""
+remoteJekyllPassWord=''
+>>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 ansibleHostsGroupName='demoservers'
 
 print("DefaultWorkingDirectory is:", DefaultWorkingDirectory)
@@ -51,7 +86,11 @@ depfunc.runShellCommand(knownHostsCommand)
 ###       and with password from key vault.  
 ###################################################################################
 print("About to create the Ansible Hosts file that Ansible will use to determine which IPs to associate with each group name.  ")
+<<<<<<< HEAD
 depfunc.createHostsFileAnsible(ansibleHostsGroupName, remoteJekyllServerIP, remoteJekyllUserName, remoteJekyllPassWord)
+=======
+createHostsFileAnsible(ansibleHostsGroupName, remoteJekyllServerIP, remoteJekyllPassWord)
+>>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
 hostsFileNameAndPath='/etc/ansible/hosts' 
 print("About to read the /etc/ansible/hosts file we just wrote.")	
@@ -68,7 +107,11 @@ playBooksDir=DefaultWorkingDirectory+"/_jekyll-devserver-aws/drop/ansible-playbo
 #Then create the var file which will hold the sudo password and maybe other things
 varFileName=playBooksDir+'myVars.yaml'
 print("varFileName is: ", varFileName)
+<<<<<<< HEAD
 depfunc.createVarsFileAnsible(varFileName, gitKeyOrganization, gitOrganizationName, remoteJekyllPassWord, gitProjectName, gitRepoName)  
+=======
+createVarsFileAnsible(varFileName, remoteJekyllPassWord)  
+>>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
 provisionJekyllDevPlayBookNameAndPath=playBooksDir+"provisionJekyllDevServer.yaml"
 print("About to read the Playbook we will subsequently run. ")
@@ -76,7 +119,11 @@ print("provisionJekyllDevPlayBookNameAndPath is: ", provisionJekyllDevPlayBookNa
 f = open(provisionJekyllDevPlayBookNameAndPath, "r")	
 print(f.read())
   
+<<<<<<< HEAD
 playBookCommandSlice = "ansible-playbook -vvvv "
+=======
+playBookCommandSlice = "ansible-playbook -vvv "
+>>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 provisionJekyllDevCommand = playBookCommandSlice + provisionJekyllDevPlayBookNameAndPath
 print("provisionJekyllDevCommand is: ", provisionJekyllDevCommand)
 depfunc.runShellCommand(provisionJekyllDevCommand)

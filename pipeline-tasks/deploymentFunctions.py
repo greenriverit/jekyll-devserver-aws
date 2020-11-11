@@ -1,11 +1,14 @@
 import subprocess
 import re  
+<<<<<<< HEAD
 import sys
 from pathlib import Path
 from IPy import IP
 import contextlib
 import platform
 import os
+=======
+>>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
 ansi_escape = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
 
@@ -23,6 +26,7 @@ def runShellCommand(commandToRun):
       else:
         break
   
+<<<<<<< HEAD
 def createHostsFileAnsible(ansibleHostsGroupName, remoteServerIP, remoteUser, remotePassWord): 
   groupNameLine="["+ansibleHostsGroupName+"]\n"	
   hostNameLine=remoteServerIP + " ansible_ssh_pass=" + remotePassWord + "\n"	
@@ -75,3 +79,5 @@ def getIP(ipFileNameAndPath):
     os.remove(ipFileNameAndPath)
   remoteServerIP = remoteServerIP.rstrip()
   return remoteServerIP
+=======
+>>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
