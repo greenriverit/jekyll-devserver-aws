@@ -6,7 +6,6 @@
   hosts: demoservers
   remote_user: agile-cloud
   vars:
-<<<<<<< HEAD
     extra_path: /home/agile-cloud/bin
   vars_files:
     - myVars.yaml
@@ -15,29 +14,17 @@
     - name: "git_password" 
       prompt: "Password for 'https://{{ git_org_user }}@dev.azure.com'"
       private: yes 
-=======
-    extra_path: /home/jekyll-host/bin
-  vars_files:
-    - myVars.yaml
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
   tasks:  
 
     - name: Get user name
       shell: whoami
 
-<<<<<<< HEAD
-=======
-    - name : Update all yum packages
-      yum: name=* state=latest update_cache=true
-
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
     - name: Run whoami command as root
       shell: whoami
       become: true
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
 
     - name : Update all yum packages
@@ -72,160 +59,6 @@
       file:
         path: /home/agile-cloud/jekyll-files/
         state: directory
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Add group jekyll-host to remote server
-      group:
-       name: jekyll-host
-       gid: 2012
-       state: present 
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Add user "jekyll-host" to remote server
-      user:
-       name: jekyll-host
-       comment: "Privileged User"
-       uid: 2001
-       group: jekyll-host
-       append: yes
-       shell: /bin/bash
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Run whoami command as the jekyll-host user
-      shell: whoami
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: add user to sudoers group without password.
-      shell:
-        cmd: |
-          cat << 'EOF' > /etc/sudoers.d/jekyll-host
-          User_Alias JEKYLL_AUTOMATION = %jekyll-host
-          JEKYLL_AUTOMATION ALL=(ALL)      NOPASSWD: ALL
-          EOF
-      args:
-        executable: /bin/bash
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/jekyll-files/ directory
-      file:
-        path: /home/jekyll-host/jekyll-files/
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/jekyll-files/_site directory
-      file:
-        path: /home/jekyll-host/jekyll-files/_site
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/jekyll-files/_plugins directory
-      file:
-        path: /home/jekyll-host/jekyll-files/_plugins
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/jekyll-files/_layouts directory
-      file:
-        path: /home/jekyll-host/jekyll-files/_layouts
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/jekyll-files/_data directory
-      file:
-        path: /home/jekyll-host/jekyll-files/_data
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/jekyll-files/_includes directory
-      file:
-        path: /home/jekyll-host/jekyll-files/_includes
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/jekyll-files/_sass directory
-      file:
-        path: /home/jekyll-host/jekyll-files/_sass
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure directories are chowned recursively from /home/jekyll-host/jekyll-files/
-      command: find /home/jekyll-host/jekyll-files/ -type d -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure files are chowned recursively from /home/jekyll-host/jekyll-files/
-      command: find /home/jekyll-host/jekyll-files/ -type f -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Create /home/jekyll-host/cloned-repos directory
-      file:
-        path: /home/jekyll-host/cloned-repos
-        state: directory
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure directories are chowned recursively from /home/jekyll-host/cloned-repos
-      command: find /home/jekyll-host/cloned-repos -type d -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure files are chowned recursively from /home/jekyll-host/cloned-repos
-      command: find /home/jekyll-host/cloned-repos -type f -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name : Update all yum packages
-      yum: name=* state=latest update_cache=true
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     - command: amazon-linux-extras install -y ruby2.6
       args:
@@ -233,11 +66,7 @@
       become: true
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     - name: Install a list of packages.  Skipping ruby-rdoc to avoid error. 
       yum:
@@ -251,7 +80,6 @@
       become: true
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
 
     - name: Ensure files are chowned recursively from /usr/share/gems/
@@ -281,56 +109,16 @@
       become_user: root
       vars:
         ansible_become_password: "{{ rt_pass }}"
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure files are chowned recursively from /usr/share/gems/
-      command: find /usr/share/gems/ -type f -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure directories are chowned recursively from /usr/share/gems/
-      command: find /usr/share/gems/ -type d -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure files are chowned recursively from /usr/lib64/gems/
-      command: find /usr/lib64/gems/ -type f -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure directories are chowned recursively from /usr/lib64/gems/
-      command: find /usr/lib64/gems/ -type d -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     - name: install jekyll gem with proper $PATH
       gem:
         name: jekyll
         user_install: no
-<<<<<<< HEAD
   
-=======
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
     - name: install bundler gem with proper $PATH
       gem:
         name: bundler
         user_install: no
-<<<<<<< HEAD
 
     - name: Clone Jekyll Source repo into the directory Jekyll will use to build live site changes 
       git:
@@ -351,163 +139,20 @@
       become_user: root
       vars:
         ansible_become_password: "{{ rt_pass }}"
-=======
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: add config file for jekyll.  This can be imported from separate file later.
-      shell:
-        cmd: |
-          cat << 'EOF' >> /home/jekyll-host/jekyll-files/_config.yaml
-          # Where things are
-          source              : /home/jekyll-host/jekyll-files/
-          destination         : /home/jekyll-host/jekyll-files/_site
-          collections_dir     : /home/jekyll-host/jekyll-files/
-          plugins_dir         : /home/jekyll-host/jekyll-files/_plugins
-          layouts_dir         : /home/jekyll-host/jekyll-files/_layouts
-          data_dir            : /home/jekyll-host/jekyll-files/_data
-          includes_dir        : /home/jekyll-host/jekyll-files/_includes
-          sass:
-            sass_dir: /home/jekyll-host/jekyll-files/_sass
-          collections:
-            posts:
-              output          : true
-          # Handling Reading
-          safe                : false
-          include             : [".htaccess"]
-          exclude             : ["Gemfile", "Gemfile.lock", "node_modules", "vendor/bundle/", "vendor/cache/", "vendor/gems/", "vendor/ruby/"]
-          keep_files          : [".git", ".svn"]
-          encoding            : "utf-8"
-          markdown_ext        : "markdown,mkdown,mkdn,mkd,md"
-          strict_front_matter : false
-          # Filtering Content
-          show_drafts         : null
-          limit_posts         : 0
-          future              : false
-          unpublished         : false
-          # Plugins
-          whitelist           : []
-          plugins             : []
-          # Conversion
-          markdown            : kramdown
-          highlighter         : rouge
-          lsi                 : false
-          excerpt_separator   : "\n\n"
-          incremental         : true
-          # Serving
-          detach              : false
-          port                : 4000
-          host                : 0.0.0.0
-          baseurl             : "" # does not include hostname
-          show_dir_listing    : false
-          # Outputting
-          permalink           : date
-          paginate_path       : /page:num
-          timezone            : null
-          quiet               : false
-          verbose             : false
-          defaults            : []
-          liquid:
-            error_mode        : warn
-            strict_filters    : false
-            strict_variables  : false
-          # Markdown Processors
-          rdiscount:
-            extensions        : []
-          redcarpet:
-            extensions        : []
-          kramdown:
-            auto_ids          : true
-            entity_output     : as_char
-            toc_levels        : [1, 2, 3, 4, 5, 6]
-            smart_quotes      : lsquo,rsquo,ldquo,rdquo
-            input             : GFM
-            hard_wrap         : false
-            footnote_nr       : 1
-            show_warnings     : false
-          EOF
-      args:
-        executable: /bin/bash
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: add an empty gemfile so that jekyll will be able to start.
-      shell:
-        cmd: |
-          cat << 'EOF' >> /home/jekyll-host/jekyll-files/Gemfile
-          source 'https://rubygems.org'
-          gem 'jekyll'
-          EOF
-      args:
-        executable: /bin/bash
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: add simple hello world html for use confirming jekyll working later.
-      shell:
-        cmd: |
-          cat << 'EOF' >> /home/jekyll-host/jekyll-files/index.html
-          <!doctype html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>Test Page</title>
-            </head>
-            <body>
-              <h1>Jekyll works!  Change this and other files in this directory, and watch the site content change on http://localhost:4000</h1>
-            </body>
-          </html>
-          EOF
-      args:
-        executable: /bin/bash
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    #The following 4 are a workaround for dev environment only to avoid a problem.  Prod permissions will not be this lax.
-    - name: Ensure directories are chowned recursively from /usr/local/lib
-      command: find /usr/local/lib -type d -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Ensure files are chowned recursively from /usr/local/lib
-      command: find /usr/local/lib -type f -exec chown jekyll-host:jekyll-host {} \;
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     - name: Ensure directories under /usr/local/lib are 0777
       command: find /usr/local/lib -type d -exec chmod 0777 {} \;
       become: true
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     - name: Ensure files under /usr/local/lib are 0777
       command: find /usr/local/lib -type f -exec chmod 0777 {} \;
       become: true
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     - name: Remove jekyll.service file so that a clean version can be created in the subsequent task
       file:
@@ -516,7 +161,6 @@
       become: true
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
 
     #Fix the mode below to make this more secure than 0775
@@ -533,43 +177,11 @@
         ansible_become_password: "{{ rt_pass }}"
 
 #21    #The following 4 are a workaround from userdata for an error that appeared when this script/playbook was in userdata 
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: create the jekyll service file.
-      shell:
-        cmd: |
-          cat << 'EOF' >> /usr/lib/systemd/system/jekyll.service
-          [Unit]
-          Description=Jekyll service
-          After=syslog.target
-          After=network.target
-          [Service]
-          User=jekyll-host
-          Type=simple
-          ExecStart=/bin/sh -c 'cd /home/jekyll-host/jekyll-files/ && /home/jekyll-host/bin/bundle exec jekyll serve --source /home/jekyll-host/jekyll-files/'
-          Restart=always
-          StandardOutput=syslog
-          StandardError=syslog
-          SyslogIdentifier=jekyll
-          [Install] 
-          WantedBy=multi-user.target
-          EOF
-      args:
-        executable: /bin/bash
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    #The following 4 are a workaround from userdata for an error that appeared when this script/playbook was in userdata 
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
     - name: Ensure directories are chowned recursively from /usr/bin/sudo
       command: find /usr/bin/sudo -type d -exec chown root:root {} \;
       become: true
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
 
     #////////////////////////////////////////////////////////// The following tasks were what were moved from below to up here so they can be completed before the systemctl stuff because ExecStart should rely on this stuff.
@@ -584,32 +196,6 @@
       become_user: root
       vars:
         ansible_become_password: "{{ rt_pass }}"
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-#This next task may be the one that is destroying the permissions structure for the VM, thus causing the errors in the subsequent tasks.
-#    - name: Ensure files are chowned recursively from /usr/bin/sudo
-#      command: find /usr/bin/sudo -type f -exec chown root:root {} \;
-#      become: true
-#      become_user: root
-#      vars:
-#        ansible_become_password: "{{ root_pass_jekyll }}"
-
-#The next task threw an error, so I am commenting out the next 2 to see if things work without them.
-#    - name: Ensure directories under /usr/bin/sudo are 4755
-#      command: find /usr/bin/sudo -type d -exec chmod 4755 {} \;
-#      become: true
-#      become_user: root
-#      vars:
-#        ansible_become_password: "{{ root_pass_jekyll }}"
-
-#    - name: Ensure files under /usr/bin/sudo are 4755
-#      command: find /usr/bin/sudo -type f -exec chmod 4755 {} \;
-#      become: true
-#      become_user: root
-#      vars:
-#        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     #Run the following systemctl commands as jekyll-host
     - name: force systemd to reread configs
@@ -619,11 +205,7 @@
       become_method: sudo
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
 
     - name: Make sure jekyll service is running
       systemd:
@@ -633,15 +215,9 @@
       become_method: sudo
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
 
     - name: Enable jekyll service and ensure it is not masked
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Enable service httpd and ensure it is not masked
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
       systemd:
         name: jekyll
         enabled: yes
@@ -650,7 +226,6 @@
       become_method: sudo
       become_user: root
       vars:
-<<<<<<< HEAD
         ansible_become_password: "{{ rt_pass }}"
 
     #Reload systemctl after installing httpd
@@ -683,71 +258,3 @@
       become_user: root
       vars:
         ansible_become_password: "{{ rt_pass }}"
-=======
-        ansible_become_password: "{{ root_pass_jekyll }}"
-    #Consider whether to find a way to run systemctl status, which is not included in the ansible module for systemd
-
-    #Consider whether to move the following 7 version checks above.
-    - name: Run ruby -v command as the jekyll-host user
-      shell: ruby -v
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Run gem -v command as the jekyll-host user
-      shell: gem -v
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Run gcc -v command as the jekyll-host user
-      shell: gcc -v 
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Run g++ -v command as the jekyll-host user
-      shell: g++ -v
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Run make -v command as the jekyll-host user
-      shell: make -v
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: show the value of extra_path
-      debug: var=extra_path
-
-    #Note that extra_path is being added to the general path for all users.  If the value of extra_path is set to something in a given user's directories, this could cause confusion. 
-    - name: Update /etc/environment for newly loaded apps
-      lineinfile:
-        dest: /etc/environment
-        line: "PATH={{ extra_path }}:$PATH"
-        owner: root
-      become: true
-      become_user: root
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Run jekyll -v command as the jekyll-host user
-      shell: jekyll -v
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
-
-    - name: Run bundler -v command as the jekyll-host user
-      shell: bundler -v
-      become: true
-      become_user: jekyll-host
-      vars:
-        ansible_become_password: "{{ root_pass_jekyll }}"
->>>>>>> d2f49ee4b121b70e6e2ded0f583312f5050e6995
