@@ -1,0 +1,14 @@
+[Unit]
+Description=Jekyll service
+After=syslog.target
+After=network.target
+[Service]
+User=agile-cloud
+Type=simple
+ExecStart=/bin/sh -c 'source /etc/profile && cd /home/agile-cloud/jekyll-files/ && /home/agile-cloud/bin/bundle exec jekyll serve --source /home/agile-cloud/jekyll-files/'
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=jekyll
+[Install] 
+WantedBy=multi-user.target

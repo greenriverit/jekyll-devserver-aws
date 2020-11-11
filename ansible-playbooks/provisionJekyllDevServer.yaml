@@ -1,0 +1,260 @@
+## Copyright 2020 Green River IT (GreenRiverIT.com) as described in LICENSE.txt distributed with this project on GitHub.  
+## Start at https://github.com/GreenRiverIT    
+
+#Get the Dev Server provisioned for Jekyll.  
+- name: Provision Dev Server for Jekyll 
+  hosts: demoservers
+  remote_user: agile-cloud
+  vars:
+    extra_path: /home/agile-cloud/bin
+  vars_files:
+    - myVars.yaml
+  #Following vars_prompt block is a test suggestion:
+  vars_prompt: 
+    - name: "git_password" 
+      prompt: "Password for 'https://{{ git_org_user }}@dev.azure.com'"
+      private: yes 
+
+  tasks:  
+
+    - name: Get user name
+      shell: whoami
+
+    - name: Run whoami command as root
+      shell: whoami
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name : Update all yum packages
+      yum: name=* state=latest update_cache=true
+
+    #Installing httpd at this point because the install will create the directory we will use as the detination for Jekyll builds below.  
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: latest
+      become: true
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure files are chowned recursively from /var/www/html/
+      command: find /var/www/html/ -type f -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure directories are chowned recursively from /var/www/html/
+      command: find /var/www/html/ -type d -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Create /home/agile-cloud/jekyll-files/ directory
+      file:
+        path: /home/agile-cloud/jekyll-files/
+        state: directory
+
+    - command: amazon-linux-extras install -y ruby2.6
+      args:
+        creates: /sbin/ruby2.6
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Install a list of packages.  Skipping ruby-rdoc to avoid error. 
+      yum:
+        name:
+          - ruby-devel
+          - gcc
+          - gcc-c++
+          - make
+          - zlib-devel
+        state: present
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure files are chowned recursively from /usr/share/gems/
+      command: find /usr/share/gems/ -type f -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure directories are chowned recursively from /usr/share/gems/
+      command: find /usr/share/gems/ -type d -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure files are chowned recursively from /usr/lib64/gems/
+      command: find /usr/lib64/gems/ -type f -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure directories are chowned recursively from /usr/lib64/gems/
+      command: find /usr/lib64/gems/ -type d -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: install jekyll gem with proper $PATH
+      gem:
+        name: jekyll
+        user_install: no
+  
+    - name: install bundler gem with proper $PATH
+      gem:
+        name: bundler
+        user_install: no
+
+    - name: Clone Jekyll Source repo into the directory Jekyll will use to build live site changes 
+      git:
+        repo: https://{{ git_org_user | urlencode }}:{{ git_password | urlencode }}@dev.azure.com/{{ git_org_user }}/{{ project_name }}/_git/{{ repo_name }}
+        dest: /home/agile-cloud/jekyll-files/
+
+    #The following 4 are a workaround for dev environment only to avoid a problem.  Prod permissions will not be this lax.
+    - name: Ensure directories are chowned recursively from /usr/local/lib
+      command: find /usr/local/lib -type d -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure files are chowned recursively from /usr/local/lib
+      command: find /usr/local/lib -type f -exec chown agile-cloud:agile-cloud {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure directories under /usr/local/lib are 0777
+      command: find /usr/local/lib -type d -exec chmod 0777 {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Ensure files under /usr/local/lib are 0777
+      command: find /usr/local/lib -type f -exec chmod 0777 {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Remove jekyll.service file so that a clean version can be created in the subsequent task
+      file:
+        path: /usr/lib/systemd/system/jekyll.service
+        state: absent
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    #Fix the mode below to make this more secure than 0775
+    - name: Copy jekyll.service with owner and permissions
+      copy:
+        src: config-files/jekyll.service
+        dest: /usr/lib/systemd/system/jekyll.service
+        owner: root
+        group: root
+        mode: '0775'
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+#21    #The following 4 are a workaround from userdata for an error that appeared when this script/playbook was in userdata 
+    - name: Ensure directories are chowned recursively from /usr/bin/sudo
+      command: find /usr/bin/sudo -type d -exec chown root:root {} \;
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    #////////////////////////////////////////////////////////// The following tasks were what were moved from below to up here so they can be completed before the systemctl stuff because ExecStart should rely on this stuff.
+    - name: Copy jekyll.sh file with owner and permissions
+      copy:
+        src: config-files/jekyll.sh
+        dest: /etc/profile.d/jekyll.sh
+        owner: root
+        group: root
+        mode: '0775'
+      become: true
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    #Run the following systemctl commands as jekyll-host
+    - name: force systemd to reread configs
+      systemd:
+        daemon_reload: yes
+      become: true
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Make sure jekyll service is running
+      systemd:
+        state: started
+        name: jekyll
+      become: true
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Enable jekyll service and ensure it is not masked
+      systemd:
+        name: jekyll
+        enabled: yes
+        masked: no
+      become: true
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    #Reload systemctl after installing httpd
+    - name: force systemd to reread configs
+      systemd:
+        daemon_reload: yes
+      become: true
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Make sure a service is running
+      systemd:
+        state: started
+        name: httpd
+      become: true
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"
+
+    - name: Enable service httpd and ensure it is not masked
+      systemd:
+        name: httpd
+        enabled: yes
+        masked: no
+      become: true
+      become_method: sudo
+      become_user: root
+      vars:
+        ansible_become_password: "{{ rt_pass }}"

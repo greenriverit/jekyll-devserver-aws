@@ -1,0 +1,29 @@
+# This minimal pipeline will need to be elaborated upon to do a more complete build, test, deploy 
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    echo About to list all contents of current directory:
+    ls -al
+    echo About to list contents of drop location:
+    ls -al $(Build.ArtifactStagingDirectory)
+    echo About to copy the artifact elements to the drop location:
+    mv LICENSE.txt $(Build.ArtifactStagingDirectory)
+    mv ansible-playbooks $(Build.ArtifactStagingDirectory)
+    mv config-files $(Build.ArtifactStagingDirectory)
+    mv modules/jekyll-devbox-module $(Build.ArtifactStagingDirectory)
+    mv pipeline-tasks $(Build.ArtifactStagingDirectory)
+    echo About to list contents of Artifact Staging Directory
+    ls -al $(Build.ArtifactStagingDirectory)
+  displayName: 'Run a multi-line script'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
